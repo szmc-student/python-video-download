@@ -1,0 +1,50 @@
+from pytube import YouTube
+from tkinter import *
+
+win= Tk()     #建立主視窗
+win.title('yt下載器')
+win.geometry("800x600")
+win.config(bg="#ffffff")
+
+
+
+#function
+def say_hi():
+    # 建立 YouTube 物件
+    x=en.get()
+    
+    yt = YouTube(x)
+    
+    progMP4 = yt.streams.filter(progressive=True, file_extension='mp4')
+    
+    targetMP4 = progMP4.order_by('resolution').desc().first()
+    
+    # 下載影片
+    video_file = targetMP4.download('下載完成')
+    
+    lb_2.config(text="\n"+"影片下載好了,請檢查資料夾")
+
+lb = Label(bg="#ffffff",fg="#000000",text="python初學者第一次做exe檔")
+
+lb_1 = Label(bg="#ffffff",fg="#000000",text="\n"+"請將網址輸入至框框中並點擊按鈕")
+
+lb_2 = Label(bg="#ffffff",fg="#000000",text="")
+
+
+lb.pack()
+lb_1.pack()
+lb_2.pack()
+
+en=Entry()
+en.pack()
+
+#button
+btn=Button(text="點擊我下載")
+btn.config(width=10,height=2) #size
+
+btn.config(command=say_hi)
+btn.pack()
+
+
+
+win.mainloop()   #常駐主視窗
